@@ -20,3 +20,8 @@ session_pool = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 class Base(AsyncAttrs, DeclarativeBase):
     pass
+
+
+async def get_db():
+    async with session_pool() as session:
+        yield session
