@@ -3,8 +3,7 @@ from fastapi.params import Depends
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.crud.students import get_user_by_credentials
-
-from db.base import get_db
+from db.models.timetable import get_teacher_timetable, get_class_timetable
 
 app = FastAPI()
 
@@ -26,3 +25,8 @@ async def autorisation(login: str,
         raise HTTPException(status_code=401, detail="auth faild")
     else:
         return student
+    
+@app.get("/similarity", tags = ["Сходство"])
+async def similarity():
+    student = await get_class_timetable()
+    
