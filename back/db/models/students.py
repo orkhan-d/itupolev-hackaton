@@ -11,7 +11,6 @@ class Student(Base):
 
     login: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] = mapped_column()
-    token: Mapped[str | None] = mapped_column()
 
     class_id: Mapped[int] = mapped_column(ForeignKey("classes.id"))
     class_: Mapped["Class"] = relationship("Class", lazy="selectin")
