@@ -7,6 +7,7 @@ RUN pip install -r requirements.txt
 
 COPY api/ /app/api/
 COPY db/ /app/db/
-COPY .env/ /app/.env
+COPY .env /app/.env
+COPY settings.py /app/settings.py
 
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0"]
