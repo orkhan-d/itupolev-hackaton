@@ -8,6 +8,7 @@ RUN pip install -r requirements.txt
 COPY migrations/ /app/migrations/
 COPY alembic.ini /app/alembic.ini
 COPY db/ /app/db/
-COPY .env/ /app/.env
+COPY .env /app/.env
+COPY settings.py /app/settings.py
 
 CMD ["alembic", "upgrade", "head"]
