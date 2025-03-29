@@ -7,6 +7,7 @@ from db.base import Base
 if TYPE_CHECKING:
     from db.models.subjects import Subject
     from db.models.teachers import Teacher
+    from db.models.classes import Class
 
 
 class Timetable(Base):
@@ -16,6 +17,9 @@ class Timetable(Base):
 
     day_of_week: Mapped[int] = mapped_column()
     lesson_number: Mapped[int] = mapped_column()
+
+    class_id: Mapped[int] = mapped_column(ForeignKey("classes.id"))
+    class_: Mapped["Class"] = relationship("Class", lazy="selectin")
 
     teacher_id: Mapped[int] = mapped_column(ForeignKey("teachers.id"))
     taecher: Mapped["Teacher"] = relationship("Teacher", lazy="selectin")
