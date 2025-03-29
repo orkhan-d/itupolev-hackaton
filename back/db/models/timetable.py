@@ -24,5 +24,5 @@ class Timetable(Base):
     teacher_id: Mapped[int] = mapped_column(ForeignKey("teachers.id"))
     taecher: Mapped["Teacher"] = relationship("Teacher", lazy="selectin")
 
-    subject_id: Mapped[int] = mapped_column(ForeignKey("teachers.id"))
+    subject_id: Mapped[int] = mapped_column(ForeignKey("subjects.id"))
     subject: Mapped["Subject"] = relationship("Subject", lazy="selectin")
