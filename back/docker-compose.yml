@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:15-alpine
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_NAME}
+    networks:
+      - net
+  migrations:
+    build:
+      context: .
+      dockerfile: migrations/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - net
+  web:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - migrations
+    networks:
+      - net
+
+networks:
+  net:
+
+volumes:
+  postgres_data:
