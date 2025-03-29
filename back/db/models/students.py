@@ -9,3 +9,4 @@ class Student(Base):
 
     login: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] = mapped_column()
+    token: Mapped[str | None] = mapped_column()
