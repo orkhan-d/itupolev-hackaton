@@ -3,8 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.models.timetable import Timetable
 
-
-async def get_class_timetable(
+#Рассписание 
+async def get_class_timetable( # РАссписание группы 
         class_id: int,
         session: AsyncSession
 ) -> list[Timetable]:
@@ -18,7 +18,7 @@ async def get_class_timetable(
         return res.scalars().all()
 
 
-async def get_teacher_timetable(teacher_id: int,
+async def get_teacher_timetable(teacher_id: int,  #Рассписание отдельного препода 
                                 session: AsyncSession) -> str:
     async with session:
         stmt = (select(Timetable)

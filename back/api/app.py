@@ -28,5 +28,9 @@ async def autorisation(login: str,
     
 @app.get("/similarity", tags = ["Сходство"])
 async def similarity():
-    student = await get_class_timetable()
-    
+    student = await get_class_timetable(day_of_week)
+    teacher = await get_teacher_timetable(day_of_week)
+    if student in teacher:
+        return {""}
+    else:
+        raise HTTPException(status_code="#", details = "Not date ")
