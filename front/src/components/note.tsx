@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export interface INote {
     id: number;
@@ -10,8 +10,16 @@ export interface INote {
     deadline: Date;
 }
 
+interface ITimeTable {
+    "id": number,
+    "day_of_week": number,
+    "lesson_number": number,
+    "subject": {
+        "name": string
+    }
+}
+
 const Note: React.FC<INote> = (note) => {
-    // accordeon
     const [open, setOpen] = useState(false);
 
     const dateDay = note.deadline.getDate();
@@ -19,6 +27,24 @@ const Note: React.FC<INote> = (note) => {
     const dateYear = note.deadline.getFullYear();
 
     const date = `${dateDay}.${dateMonth}.${dateYear}`;
+
+    useEffect(() => {
+        if (!open) {
+            setTimetables([]);
+        }
+    }, [open]);
+
+    const [timetables, setTimetables] = useState<ITimeTable[]>([]);
+
+    const getTimetable = async () => {
+        if (timetables.length > 0) {
+            setTimetables([]);
+            return;
+        }
+        const response = await fetch(`http://localhost:8000/timetable?teacher_id=${note.teacher_id}`);
+        const data = await response.json();
+        setTimetables(data);
+    }
 
     return (
         <div className={`note ${open ? "open" : ""}`}>
@@ -34,9 +60,33 @@ const Note: React.FC<INote> = (note) => {
 				            <p>{date}</p>
 			            </div>
 			            <p>{note.info}</p>
-			            <button type={"button"} className={"note-btn"}>
-                            {note.done ? "Выполнено" : "Не выполнено"}
+			            <button type={"button"} className={"note-btn"} onClick={getTimetable}>
+                            {
+                                timetables.length == 0
+                                    ? "Показать расписание преподавателя"
+                                    : "Скрыть расписание преподавателя"
+                            }
 			            </button>
+                        {
+                            timetables.length == 0
+                                ? <></>
+                                : <div className={"timetable"}>
+                                    <h4>Расписание преподавателя</h4>
+                                    <ul>
+                                        {
+                                            timetables.map((timetable) => {
+                                                return (
+                                                    <li key={timetable.id}>
+                                                        <p>{timetable.subject.name}</p>
+                                                        <p>{timetable.day_of_week} день недели</p>
+                                                        <p>{timetable.lesson_number} пара</p>
+                                                    </li>
+                                                );
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                        }
 		            </div>
 	            </>
             }
