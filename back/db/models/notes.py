@@ -13,7 +13,7 @@ class Note(Base):
     title: Mapped[str] = mapped_column()
     content: Mapped[str] = mapped_column()
 
-    student_id: Mapped[int] = mapped_column(ForeignKey('notes.id'))
+    student_id: Mapped[int] = mapped_column(ForeignKey('students.id'))
 
     teacher_id: Mapped[int] = mapped_column(ForeignKey('teachers.id'))
     teacher: Mapped["Teacher"] = relationship("Teacher", lazy="selectin")
