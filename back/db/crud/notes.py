@@ -30,7 +30,7 @@ async def add_note(
             content=content,
             student_id=student_id,
             teacher_id=teacher_id,
-            deadline=deadline,
+            deadline=deadline.replace(tzinfo=None),
         )
         session.add(note)
         await session.commit()
