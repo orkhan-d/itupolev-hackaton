@@ -1,10 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.params import Depends
+from pydantic import BaseModel
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from db.crud.notes import add_note, get_notes
 from db.crud.students import get_user_by_credentials
 from db.crud.timestables import get_teacher_timetable, get_class_timetable
-from db.base import get_db  
+from db.base import get_db
+from datetime import datetime as dt
 app = FastAPI()
 
 
@@ -44,3 +48,29 @@ async def similarity(
         )
 
     return timetable
+
+
+class NoteCreate(BaseModel):
+    title: str
+    content: str
+    teacher_id: int
+    student_id: int
+    deadline: dt
+
+
+@app.post("/notes")
+async def create_note_api(
+        note: NoteCreate,
+        session: AsyncSession = Depends(get_db)
+):
+    note = await add_note(**note.model_dump(), session=session)
+    return note
+
+
+@app.get("/notes")
+async def create_note_api(
+    student_id: int,
+    session: AsyncSession = Depends(get_db)
+):
+    notes = await get_notes(student_id, session=session)
+    return notes
