@@ -1,6 +1,6 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+:root {
+  --primary-color: #86A5D9;
+  --secondary-color: #01B7FF66;
+  --gray-color: #D9D9D9;
+  --dark-gray-color: #989898;
 }
