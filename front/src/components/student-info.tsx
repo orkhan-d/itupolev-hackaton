@@ -1,11 +1,13 @@
-import React from 'react';
 import Line from '../assets/line.svg';
 import Avatar from '../assets/avatar.svg';
-import {IStudentInfo} from "../api/auth.ts";
+import React from "react";
 
+interface Info {
+    full_name: string,
+    stud_class: string
+}
 
-
-const StudentInfo: React.FC<IStudentInfo> = ({full_name, stud_class}) => {
+const StudentInfo: React.FC<Info> = (props: Info) => {
     return (
         <div className={"w-100 d-flex align-items-center justify-content-between p-3"}
              style={{
@@ -17,8 +19,8 @@ const StudentInfo: React.FC<IStudentInfo> = ({full_name, stud_class}) => {
                  fontSize: "20px"
              }}>
             <div className={"d-flex flex-column gap-1 p-1"}>
-                <p>{full_name}</p>
-                <p>КАИ / {stud_class}</p>
+                <p>{props.full_name}</p>
+                <p>КАИ / {props.stud_class}</p>
                 <img src={Line} alt=""/>
             </div>
             <img src={Avatar} alt="" className={"w-25"}/>

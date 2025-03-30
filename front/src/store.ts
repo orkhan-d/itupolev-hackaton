@@ -1,10 +1,7 @@
 import { create } from 'zustand'
+import {IStudentInfo} from "./api/auth.ts";
 
-type StudentStore = {
-    s
-}
 
-const useStore = create<Store>()((set) => ({
-    count: 1,
-    inc: () => set((state) => ({ count: state.count + 1 })),
+export const useStore = create<{student: IStudentInfo | null}>()(() => ({
+    student: null,
 }))
