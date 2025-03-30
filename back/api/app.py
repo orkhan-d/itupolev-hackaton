@@ -3,7 +3,7 @@ from fastapi.params import Depends
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.crud.students import get_user_by_credentials
-from db.models.timetable import get_teacher_timetable, get_class_timetable
+from db.crud.timestables import get_teacher_timetable, get_class_timetable
 from db.base import get_db  
 app = FastAPI()
 
@@ -26,23 +26,21 @@ async def autorisation(login: str,
     else:
         return student
     
-@app.get("/similarity", tags=["Сходство"])
+@app.get("/timetable", tags=["Сходство"])
 async def similarity(
-    day_of_week: str,
+    class_id: int | None = None,
+    teacher_id: int | None = None,
     session: AsyncSession = Depends(get_db)
 ):
-    student_timetable = await get_class_timetable(day_of_week, session)
-    teacher_timetable = await get_teacher_timetable(day_of_week, session)
-    
-    common_entries = [
-        entry for entry in student_timetable 
-        if entry in teacher_timetable
-    ]
-    
-    if not common_entries:
+
+    if class_id:
+        timetable = await get_class_timetable(class_id, session)
+    elif teacher_id:
+        timetable = await get_teacher_timetable(teacher_id, session)
+    else:
         raise HTTPException(
-            status_code=404, 
-            detail="No common entries found for the given day"
+            status_code=422,
+            detail="Invalid data"
         )
-    
-    return {"common_entries": common_entries}
+
+    return timetable
