@@ -3,6 +3,7 @@ from fastapi.params import Depends
 from pydantic import BaseModel
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.middleware.cors import CORSMiddleware
 
 from db.crud.notes import add_note, get_notes
 from db.crud.students import get_user_by_credentials
@@ -11,6 +12,13 @@ from db.base import get_db
 from datetime import datetime as dt
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/ping')
 async def pong(session: AsyncSession = Depends(get_db)):
