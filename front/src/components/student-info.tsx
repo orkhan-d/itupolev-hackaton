@@ -1,11 +1,9 @@
 import React from 'react';
 import Line from '../assets/line.svg';
 import Avatar from '../assets/avatar.svg';
+import {IStudentInfo} from "../api/auth.ts";
 
-export interface IStudentInfo {
-    full_name: string;
-    stud_class: string;
-}
+
 
 const StudentInfo: React.FC<IStudentInfo> = ({full_name, stud_class}) => {
     return (
