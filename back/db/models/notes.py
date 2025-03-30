@@ -11,6 +11,7 @@ class Note(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column()
+    content: Mapped[str] = mapped_column()
 
     student_id: Mapped[int] = mapped_column(ForeignKey('notes.id'))
 
