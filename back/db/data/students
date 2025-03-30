@@ -1,5 +1,27 @@
-20,Marsel,MarselMarsel,1
-21,Kirill,KirillKirill,2
-22,Nazar,NazarNazar,3
-23,Vlad,VladVlad,4
-24,Orkhan,OrkhanOrkhan,5
+[
+    {
+        "login": "Marsel",
+        "password": "MarselMarsel",
+        "class_id": "1"
+    },
+    {
+        "login": "Kirill",
+        "password": "KirillKirill",
+        "class_id": "2"
+    },
+    {
+        "login": "Nazar",
+        "password": "NazarNazar",
+        "class_id": "3"
+    },
+    {
+        "login": "Vlad",
+        "password": "VladVlad",
+        "class_id": "4"
+    },
+    {
+        "login": "Orkhan",
+        "password": "OrkhanOrkhan",
+        "class_id": "5"
+    }
+]
